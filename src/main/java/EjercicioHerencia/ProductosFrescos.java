@@ -1,6 +1,6 @@
 package EjercicioHerencia;
 
-public class ProductosFrescos extends Productos {
+public class ProductosFrescos extends Producto {
 
     int fechaDeEnvasado;
     String PaisDeOrigen;
@@ -25,5 +25,13 @@ public class ProductosFrescos extends Productos {
 
     public void setPaisDeOrigen(String paisDeOrigen) {
         PaisDeOrigen = paisDeOrigen;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductosFrescos{" +
+                "fechaDeEnvasado=" + fechaDeEnvasado +
+                ", PaisDeOrigen='" + PaisDeOrigen + '\'' +
+                "} " + super.toString();
     }
 }

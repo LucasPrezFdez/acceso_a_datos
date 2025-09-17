@@ -1,6 +1,6 @@
 package EjercicioHerencia;
 
-public class ProductosConjelados extends Productos {
+public class ProductosConjelados extends Producto {
 
     int temperaturaRecomendada;
 
@@ -15,5 +15,12 @@ public class ProductosConjelados extends Productos {
 
     public void setTemperaturaRecomendada(int temperaturaRecomendada) {
         this.temperaturaRecomendada = temperaturaRecomendada;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductosConjelados{" +
+                "temperaturaRecomendada=" + temperaturaRecomendada +
+                "} " + super.toString();
     }
 }

@@ -1,11 +1,11 @@
 package EjercicioHerencia;
 
-public class Productos {
+public class Producto {
 
     int fechaDeCaducidad;
     int numeroDeLote;
 
-    public Productos(int fechaDeCaducidad, int numeroDeLote) {
+    public Producto(int fechaDeCaducidad, int numeroDeLote) {
         this.fechaDeCaducidad = fechaDeCaducidad;
         this.numeroDeLote = numeroDeLote;
     }
@@ -24,5 +24,13 @@ public class Productos {
 
     public void setNumeroDeLote(int numeroDeLote) {
         this.numeroDeLote = numeroDeLote;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "fechaDeCaducidad=" + fechaDeCaducidad +
+                ", numeroDeLote=" + numeroDeLote +
+                '}';
     }
 }

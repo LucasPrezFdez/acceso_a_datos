@@ -1,6 +1,6 @@
 package EjercicioHerencia;
 
-public class ProductosRefrigerados extends Productos {
+public class ProductosRefrigerados extends Producto {
 
     int CodigoDeOrganismo;
 
@@ -15,5 +15,12 @@ public class ProductosRefrigerados extends Productos {
 
     public void setCodigoDeOrganismo(int codigoDeOrganismo) {
         CodigoDeOrganismo = codigoDeOrganismo;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductosRefrigerados{" +
+                "CodigoDeOrganismo=" + CodigoDeOrganismo +
+                "} " + super.toString();
     }
 }
