@@ -43,10 +43,13 @@ public class Multimedia {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Multimedia that = (Multimedia) o;
-        return Objects.equals(titulo, that.titulo) &&
-                Objects.equals(autor, that.autor);
+        return Objects.equals(titulo, that.titulo) && Objects.equals(autor, that.autor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo, autor);
     }
 }

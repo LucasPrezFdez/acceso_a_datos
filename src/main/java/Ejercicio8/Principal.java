@@ -14,7 +14,7 @@ public class Principal {
 
 
         // Mostrar nombre y sueldo de empleado1, empleado2 y empleado3, turno y región
-        System.out.println("**********");
+        System.out.println("******************************");
         System.out.println(empleado1.getNombre() + " - Sueldo: " + empleado1.getSalarioBase());
         System.out.println(empleado2.getNombre() + " - Sueldo: " + empleado2.getSalarioBase() + " - Turno: " + empleado2.getTurno());
         System.out.println(empleado3.getNombre() + " - Sueldo: " + empleado3.getSalarioBase() + " - Región: " + empleado3.getRegion());
@@ -25,7 +25,7 @@ public class Principal {
         array_asal[1] = empleado2;
         array_asal[2] = empleado3;
 
-        System.out.println("**********");
+        System.out.println("******************************");
         for (Asalariado asalariado : array_asal) {
             System.out.println(asalariado.getNombre() + " - Sueldo: " + asalariado.getSalarioBase());
         }
