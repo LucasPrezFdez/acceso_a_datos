@@ -35,31 +35,31 @@ public class PiscinaVentana extends JFrame implements ActionListener {
 
     public void inicio() {
 
-
+//        320      370      420
         JLabel texto = new JLabel("Capacidad de la piscina en metros cubicos: ");
         texto.setBounds(20, 20, 300, 30);
         container.add(texto);
 
         String[] valores = {"1.0", "1.1", "1.2", "1.3", "1.4", "1.5"};
         comboCapacidad = new JComboBox<>(valores);
-        comboCapacidad.setBounds(330, 20, 50, 20);
+        comboCapacidad.setBounds(310, 25, 50, 20);
         container.add(comboCapacidad);
 
 
-        probarPiscina = new JButton("<html>Probar<br>Piscina</html>");
-        probarPiscina.setBounds(100, 60, 100, 80);
+        probarPiscina = new JButton("Probar Piscina");
+        probarPiscina.setBounds(60, 60, 180, 80);
         probarPiscina.addActionListener(this);
         container.add(probarPiscina);
 
 
         llenar = new JButton("Llenar");
-        llenar.setBounds(160, 200, 100, 40);
+        llenar.setBounds(230, 200, 100, 40);
         llenar.setBackground(Color.green);
         llenar.addActionListener(this);
         container.add(llenar);
 
         vaciar = new JButton("Vaciar");
-        vaciar.setBounds(400, 200, 100, 40);
+        vaciar.setBounds(450, 200, 100, 40);
         vaciar.setBackground(Color.red);
         vaciar.addActionListener(this);
         container.add(vaciar);
@@ -70,12 +70,12 @@ public class PiscinaVentana extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == probarPiscina) {
-            double capacidad = Double.parseDouble((String) comboCapacidad.getSelectedItem());
+            double capacidad = Double.parseDouble((String) comboCapacidad.getSelectedItem())*1000;
             piscina = new Piscina(capacidad);
 
             if (accion != null) container.remove(accion); // Eliminar slider anterior si existe
-            accion = new JSlider(0, (int) (piscina.MAX_NIVEL * 1000));
-            accion.setBounds(20, 250, 700, 100);
+            accion = new JSlider(0, (int) (piscina.MAX_NIVEL));
+            accion.setBounds(20, 250, 740, 100);
             accion.setMajorTickSpacing(100);
             accion.setMinorTickSpacing(10);
             accion.setPaintTicks(true);
@@ -84,6 +84,7 @@ public class PiscinaVentana extends JFrame implements ActionListener {
             accion.setPaintLabels(true);
             container.add(accion);
             areaTexto.setText("Piscina Vacía: 0");
+            areaTexto.append("\n===========================================================");
             container.repaint();
         }
         if (e.getSource() == llenar) {
@@ -93,11 +94,26 @@ public class PiscinaVentana extends JFrame implements ActionListener {
             try {
                 piscina.llenar(litros);
                 accion.setValue((int) piscina.getNivel());
-                areaTexto.setText("Se añaden " + litros + ". Nuevo nivel: " + piscina.getNivel() + " m³");
+                areaTexto.append("\nSe añaden " + litros + ". Nuevo nivel: " + piscina.getNivel() + " m³");
+                areaTexto.append("\n===========================================================");
             } catch (Exception ex) {
-                areaTexto.setText("Excepción: " + ex.getMessage() + " | Nivel actual: " + piscina.getNivel() + " m³");
+                areaTexto.append("\nExcepción: " + ex.getMessage() + " | Nivel actual: " + piscina.getNivel() + " m³");
+                areaTexto.append("\n===========================================================");
             }
-
+        }
+        if (e.getSource() == vaciar) {
+            Random random = new Random();
+            double litros = random.nextInt(1, 1001); // 1 a 1000 inclusive
+            System.out.println(litros);
+            try {
+                piscina.vaciar(litros);
+                accion.setValue((int) piscina.getNivel());
+                areaTexto.append("\nSe vacían " + litros + ". Nuevo nivel: " + piscina.getNivel() + " m³");
+                areaTexto.append("\n===========================================================");
+            } catch (Exception ex) {
+                areaTexto.append("\nExcepción: " + ex.getMessage() + " | Nivel actual: " + piscina.getNivel() + " m³");
+                areaTexto.append("\n===========================================================");
+            }
         }
     }
 

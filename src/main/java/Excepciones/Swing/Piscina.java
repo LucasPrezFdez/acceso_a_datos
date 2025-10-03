@@ -16,7 +16,7 @@ public class Piscina {
 
     public void vaciar(double cantidad) {
         if (nivel - cantidad < 0) {
-            throw new IllegalArgumentException("No puedes vaciar mas de lo que tiene");
+            throw new IllegalArgumentException("\nNo puedes vaciar mas de lo que tiene");
         } else {
             nivel -= cantidad;
         }
@@ -24,7 +24,8 @@ public class Piscina {
 
     public void llenar(double cantidad) {
     if ((nivel + cantidad) > MAX_NIVEL) {
-            throw new IllegalArgumentException("No puedes llenar la piscina con mas litros de los que soporta");
+            throw new IllegalArgumentException("\nNo puedes llenar la piscina con mas litros de los que soporta");
+
         } else {
             nivel += cantidad;
         }
