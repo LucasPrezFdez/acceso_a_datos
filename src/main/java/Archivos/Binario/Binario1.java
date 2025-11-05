@@ -54,6 +54,7 @@ public class Binario1 {
         } catch (EOFException e) {
             // Fin del fichero
         } catch (IOException e) {
+            //
             // Error al leer el fichero
         }
         return contador;
