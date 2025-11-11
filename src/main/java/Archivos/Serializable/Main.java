@@ -2,6 +2,7 @@ package Archivos.Serializable;
 
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +12,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         // Escribimos objetos en el fichero usando try-with-resources
-        try (FileOutputStream fs = new FileOutputStream("coches.txt");
+        try (FileOutputStream fs = new FileOutputStream("coches.obj", true);
              ObjectOutputStream os = new ObjectOutputStream(fs)) {
 
             for (int i = 0; i < 2; i++) {
@@ -38,7 +39,7 @@ public class Main {
         }
 
         // Leemos los objetos y los mostramos por pantalla
-        try (FileInputStream fis = new FileInputStream("coches.txt");
+        try (FileInputStream fis = new FileInputStream("coches.obj");
              ObjectInputStream ois = new ObjectInputStream(fis)) {
 
             while (true) {
@@ -57,4 +58,21 @@ public class Main {
 
     }
 
+    public static ArrayList<Coches> ListarCochesMarca (String marca) {
+        ArrayList<Coches> coincidencias = null;
+        try {
+            FileInputStream fis = new FileInputStream("coches.obj");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            coincidencias = new ArrayList<>();
+            while (true) {
+                Coches coche = (Coches) ois.readObject();
+                if (coche.getMarca().equals(marca))
+                    coche.toString();
+                coincidencias.add(coche);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println(e);
+        }
+        return coincidencias;
+    }
 }
