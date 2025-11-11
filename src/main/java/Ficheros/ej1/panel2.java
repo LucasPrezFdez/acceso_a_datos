@@ -2,6 +2,8 @@ package Ficheros.ej1;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,6 +13,7 @@ public class panel2 {
     private JTextField textoAIntroducir;
     private JButton crearButton;
     private JPanel panel2;
+    private JButton closeButton;
     private File archivo;
 
     public panel2(File archivo) {
@@ -29,13 +32,14 @@ public class panel2 {
                 JOptionPane.showMessageDialog(panel2,
                         "Texto guardado correctamente en:\n" + this.archivo.getAbsolutePath());
 
-                Window w = SwingUtilities.getWindowAncestor(panel2);
-                w.dispose();
-
             } catch (IOException err) {
                 JOptionPane.showMessageDialog(panel2,
                         "Error al guardar el archivo:\n" + err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
+        });
+        closeButton.addActionListener(e -> {
+            Window w = SwingUtilities.getWindowAncestor(panel2);
+            w.dispose();
         });
     }
 
