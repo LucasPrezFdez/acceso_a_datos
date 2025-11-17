@@ -7,10 +7,10 @@ public class Conexion {
     private JTextField direccion;
     private JTextField puerto;
     private JTextField nombre;
-    private JTextField constraseña;
     private JLabel direccionLabel;
     private JLabel puertoLabel;
     private JLabel nombreLabel;
     private JLabel contraseñaLabel;
     private JButton conectar;
+    private JPasswordField contraseña;
 }
