@@ -6,13 +6,19 @@ public class Conexion {
 
     public static void main(String[] args) throws SQLException {
 
-        String conn = "jdbc:mysql://localhost:3306/northwind";
+        String conn = "jdbc:mysql://localhost:3306/";
         String root = "root";
         String pass = "";
         try {
             Connection connection = DriverManager.getConnection(conn, root, pass);
+
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM products ");
+            st.execute("USE Northwind");
+            String consulta = "SELECT CustomerID, OrderID, SUM(Quantity * UnitPrice) AS TOTAL FROM OrderDetails" +
+                    " od JOIN orders USING (orderID) WHERE customerID=? GROUP BY orderID Order By CustomerID";
+            PreparedStatement pstmt = connection.prepareStatement(consulta);
+            pstmt.setString(1,"ALFKI");
+            ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
 
             for (int i = 1; i < rsmd.getColumnCount(); i++) {
