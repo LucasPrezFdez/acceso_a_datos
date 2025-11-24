@@ -58,9 +58,11 @@ public class Conexion {
                         st.execute("USE Northwind");
 
                         JFrame frame = new JFrame("Conexion");
-                        frame.setContentPane(new OperationPanel().getPanelOperaciones());
+                        frame.setContentPane(new OperationPanel(connection, st).getPanelOperaciones());
                         frame.pack();
                         frame.setVisible(true);
+
+
 
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
