@@ -32,7 +32,8 @@ public class OperationPanel {
                 ResultSet rs;
 
                 try {
-                    rs = st.executeQuery("SELECT * from TABLE ( Products )");
+                    rs = st.executeQuery("SELECT * from Products");
+
                     meta = rs.getMetaData();
                     columnas = meta.getColumnCount();
 
@@ -40,7 +41,7 @@ public class OperationPanel {
                     throw new RuntimeException(ex);
                 }
 
-                DefaultTableModel modelo = new DefaultTableModel();
+               DefaultTableModel modelo = new DefaultTableModel();
 
                 for (int i = 1; i <= columnas; i++) {
                     try {
@@ -65,7 +66,7 @@ public class OperationPanel {
 
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File archivo = fileChooser.getSelectedFile();
-                    importarCSV(archivo, modelo);
+                    importarCSV(archivo, modelo,connection);
                 }
 
             }
@@ -77,20 +78,44 @@ public class OperationPanel {
         return panelOperaciones;
     }
 
-    public void importarCSV(File archivo, DefaultTableModel modelo) {
+    public void importarCSV(File archivo, DefaultTableModel modelo, Connection connection) {
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
 
             String linea;
+            PreparedStatement pst = null;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < modelo.getColumnCount(); i++) {
+
+                if (i != modelo.getColumnCount()-1)
+                    sb.append(modelo.getColumnName(i)+",");
+                else
+                sb.append(modelo.getColumnName(i));
+
+                pst = connection.prepareStatement("INSERT INTO Products ("+sb+") values ?");
+
+            }
 
             while ((linea = br.readLine()) != null) {
                 // divide cada línea por comas
                 String[] datos = linea.split(",");
 
                 // asegúrate de que tenga 10 columnas
-                if (datos.length == 10) {
-                    modelo.addRow(datos);
-                }
+//                if (datos.length == 10) {
+//                    modelo.addRow(datos);
+//                }
+                pst.setString(1, datos[0]);
+                pst.setString(2, datos[1]);
+                pst.setString(3, datos[2]);
+                pst.setString(4, datos[3]);
+                pst.setString(5, datos[4]);
+                pst.setString(6, datos[5]);
+                pst.setString(7, datos[6]);
+                pst.setString(8, datos[7]);
+                pst.setString(9, datos[8]);
+                pst.setString(10, datos[9]);
             }
+
+            pst.executeQuery();
 
             JOptionPane.showMessageDialog(panelOperaciones,"Importación exitosa.");
 
@@ -133,7 +158,6 @@ public class OperationPanel {
                 modelo.addRow(fila);
             }
 
-            conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();
