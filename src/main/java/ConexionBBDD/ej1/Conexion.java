@@ -54,11 +54,10 @@ public class Conexion {
                     try {
                         Connection connection = DriverManager.getConnection
                                 (conn, nombre.getText(),pass );
-                        Statement st = connection.createStatement();
-                        st.execute("USE Northwind");
+
 
                         JFrame frame = new JFrame("Conexion");
-                        frame.setContentPane(new OperationPanel(connection, st).getPanelOperaciones());
+                        frame.setContentPane(new OperationPanel(connection).getPanelOperaciones());
                         frame.pack();
                         frame.setVisible(true);
 
