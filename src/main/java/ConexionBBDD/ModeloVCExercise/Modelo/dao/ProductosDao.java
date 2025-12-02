@@ -1,6 +1,5 @@
 package ConexionBBDD.ModeloVCExercise.Modelo.dao;
 
-import ConexionBBDD.ModeloVC.modelo.vo.PersonaVo;
 import ConexionBBDD.ModeloVCExercise.Modelo.conexion.Conexion;
 import ConexionBBDD.ModeloVCExercise.Modelo.vo.ProductosVo;
 
@@ -8,11 +7,11 @@ import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
 public class ProductosDao {
 
-    public void registrarProducto(ProductosVo productosVo) throws SQLException {
+    public void registrarProducto(ProductosVo productosVo) {
 
         try {
             Conexion conn = new Conexion();
@@ -58,7 +57,34 @@ public class ProductosDao {
             e.printStackTrace();
         }
 
-        return null;
+        if (existe) {
+            return productosVo;
+        } else return null;
     }
+
+    public List<ProductosVo> listarProductos() throws SQLException {
+        Conexion conn = new Conexion();
+        List<ProductosVo> lista = null;
+        try {
+            PreparedStatement ps = conn.getConnection().prepareStatement("Select * from productos");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+
+                ProductosVo p = new ProductosVo();
+                p.setIdProducto(Integer.parseInt(rs.getString("ProductId")));
+                p.setNombre(rs.getString("ProductName"));
+                p.setSuplierID(Integer.parseInt(rs.getString("SupplierID")));
+                p.setCategoryID(Integer.parseInt(rs.getString("CategoryID")));
+                p.setCantidadProducto(rs.getString("QuantityPerUnit"));
+                p.setPrecioUnidad(Integer.parseInt(rs.getString("UnitPrice")));
+                p.setStock(Integer.parseInt(rs.getString("UnitsInStock")));
+                lista.add(p);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
+
 
 }
