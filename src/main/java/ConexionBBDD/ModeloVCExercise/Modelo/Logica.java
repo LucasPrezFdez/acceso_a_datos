@@ -6,6 +6,7 @@ import ConexionBBDD.ModeloVCExercise.Modelo.vo.ProductosVo;
 import ConexionBBDD.ModeloVCExercise.Vista.VentanaPrincipal;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 
 
 public class Logica {
@@ -39,13 +40,18 @@ public class Logica {
             return;
         }
 
-        int cols = coordinador.getVentanaPrincipal().table1.getColumnCount();
-        String[] datos = new String[cols];
-        for (int c = 0; c < cols; c++) {
-            Object val = coordinador.getVentanaPrincipal().table1.getValueAt(row, c);
-            datos[c] = val != null ? val.toString() : "";
-        }
+        TableModel model = coordinador.getVentanaPrincipal().table1.getModel();
 
+        coordinador.getVentanaModificar().IDProducto.setText(model.getValueAt(row,0).toString());
+        coordinador.getVentanaModificar().nombre.setText(model.getValueAt(row,1).toString());
+        coordinador.getVentanaModificar().idDistribuidor.setText(model.getValueAt(row,2).toString());
+        coordinador.getVentanaModificar().idCategoria.setText(model.getValueAt(row,3).toString());
+        coordinador.getVentanaModificar().cantidad.setText(model.getValueAt(row,4).toString());
+        coordinador.getVentanaModificar().precio.setText(model.getValueAt(row,5).toString());
+        coordinador.getVentanaModificar().stock.setText(model.getValueAt(row,6).toString());
+        coordinador.getVentanaModificar().udsOrden.setText(model.getValueAt(row,7).toString());
+        coordinador.getVentanaModificar().prioridadOrden.setText(model.getValueAt(row,8).toString());
+        coordinador.getVentanaModificar().discotinued.setText(model.getValueAt(row,9).toString());
 
     }
 }

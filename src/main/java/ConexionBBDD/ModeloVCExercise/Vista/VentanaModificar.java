@@ -9,16 +9,16 @@ public class VentanaModificar {
 
     public Coordinador miCoordinador;
     public JPanel ventanaModificar;
-    private JTextField IDProducto;
-    private JTextField nombre;
-    private JTextField idDistribuidor;
-    private JTextField idCategoria;
-    private JTextField cantidad;
-    private JTextField precio;
-    private JTextField stock;
-    private JTextField udsOrden;
-    private JTextField prioridadOrden;
-    private JTextField discotinued;
+    public JTextField IDProducto;
+    public JTextField nombre;
+    public JTextField idDistribuidor;
+    public JTextField idCategoria;
+    public JTextField cantidad;
+    public JTextField precio;
+    public JTextField stock;
+    public JTextField udsOrden;
+    public JTextField prioridadOrden;
+    public JTextField discotinued;
     private JButton rechazarButton;
     private JButton aceptarButton;
 
