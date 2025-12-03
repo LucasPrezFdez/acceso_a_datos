@@ -2,12 +2,16 @@ package ConexionBBDD.ModeloVCExercise.Modelo.dao;
 
 import ConexionBBDD.ModeloVCExercise.Modelo.conexion.Conexion;
 import ConexionBBDD.ModeloVCExercise.Modelo.vo.ProductosVo;
+import ConexionBBDD.ModeloVCExercise.Vista.VentanaModificar;
+import ConexionBBDD.ModeloVCExercise.Vista.VentanaPrincipal;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
+import java.sql.ResultSetMetaData;
+import java.util.Vector;
+
 
 public class ProductosDao {
 
@@ -33,7 +37,7 @@ public class ProductosDao {
         }
     }
 
-    public ProductosVo buscarProducto(String nombre) throws SQLException {
+    public ProductosVo buscarProducto(String nombre){
 
         Conexion conn = new Conexion();
         ProductosVo productosVo = new ProductosVo();
@@ -62,28 +66,55 @@ public class ProductosDao {
         } else return null;
     }
 
-    public List<ProductosVo> listarProductos() throws SQLException {
+    public void listarProductos(VentanaPrincipal ventanaPrincipal) {
         Conexion conn = new Conexion();
-        List<ProductosVo> lista = null;
-        try {
-            PreparedStatement ps = conn.getConnection().prepareStatement("Select * from productos");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+        try (PreparedStatement ps = conn.getConnection().prepareStatement("SELECT * FROM products");
+             ResultSet rs = ps.executeQuery()) {
 
-                ProductosVo p = new ProductosVo();
-                p.setIdProducto(Integer.parseInt(rs.getString("ProductId")));
-                p.setNombre(rs.getString("ProductName"));
-                p.setSuplierID(Integer.parseInt(rs.getString("SupplierID")));
-                p.setCategoryID(Integer.parseInt(rs.getString("CategoryID")));
-                p.setCantidadProducto(rs.getString("QuantityPerUnit"));
-                p.setPrecioUnidad(Integer.parseInt(rs.getString("UnitPrice")));
-                p.setStock(Integer.parseInt(rs.getString("UnitsInStock")));
-                lista.add(p);
+            DefaultTableModel model = (DefaultTableModel) ventanaPrincipal.table1.getModel();
+            // limpiar tabla
+            model.setRowCount(0);
+            model.setColumnCount(0);
+
+            // Encabezados
+            ResultSetMetaData meta = rs.getMetaData();
+            int cols = meta.getColumnCount();
+            Vector<String> headers = new Vector<>();
+            for (int i = 1; i <= cols; i++) {
+                headers.add(meta.getColumnName(i));
             }
+            model.setColumnIdentifiers(headers);
+
+            // Filas
+            int numRegistros = 0;
+            while (rs.next()) {
+                Vector<Object> fila = new Vector<>();
+                for (int i = 1; i <= cols; i++) {
+                    fila.add(rs.getObject(i));
+                }
+                model.addRow(fila);
+                numRegistros++;
+            }
+
+            // Actualizar la vista: usar table1 si existe (probable GUI builder), sino tablaProductos
+            if (ventanaPrincipal.table1 != null) ventanaPrincipal.table1.setModel(model);
+            else ventanaPrincipal.table1.setModel(model);
+            while (rs.next()) {
+                Object[] row = new Object[] {
+                        rs.getInt("ProductId"),
+                        rs.getString("ProductName"),
+                        rs.getInt("SupplierID"),
+                        rs.getInt("CategoryID"),
+                        rs.getString("QuantityPerUnit"),
+                        rs.getDouble("UnitPrice"),
+                        rs.getInt("UnitsInStock")
+                };
+                model.addRow(row);
+            }
+            conn.desconectar();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return lista;
     }
 
 
