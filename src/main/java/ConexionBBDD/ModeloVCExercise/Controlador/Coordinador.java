@@ -36,9 +36,9 @@ public class Coordinador {
         this.miLogica = miLogica;
     }
 
-    public void mostrarVentanaModificar( ) {
+    public void mostrarVentanaModificar() {
         JFrame frame = new JFrame("VentanaModificar");
-        frame.setContentPane(new VentanaModificar().ventanaModificar);
+        frame.setContentPane(ventanaModificar.ventanaModificar);
         frame.pack();
         frame.setVisible(true);
         cargarProductoAModificar();
@@ -50,6 +50,10 @@ public class Coordinador {
 
     public void cargarTabla(){
         miLogica.cargarTabla(ventanaPrincipal);
+    }
+
+    public void modificarProducto() {
+        miLogica.modificarProducto(ventanaModificar);
     }
 
 

@@ -102,7 +102,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value=""/>
+        </properties>
       </component>
       <component id="ab805" class="javax.swing.JTextField" binding="nombre">
         <constraints>
@@ -110,7 +112,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value=""/>
+        </properties>
       </component>
       <component id="5fa11" class="javax.swing.JTextField" binding="idDistribuidor">
         <constraints>

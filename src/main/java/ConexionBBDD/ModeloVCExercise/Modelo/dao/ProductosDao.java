@@ -2,7 +2,6 @@ package ConexionBBDD.ModeloVCExercise.Modelo.dao;
 
 import ConexionBBDD.ModeloVCExercise.Modelo.conexion.Conexion;
 import ConexionBBDD.ModeloVCExercise.Modelo.vo.ProductosVo;
-import ConexionBBDD.ModeloVCExercise.Vista.VentanaModificar;
 import ConexionBBDD.ModeloVCExercise.Vista.VentanaPrincipal;
 
 import javax.swing.*;
@@ -37,7 +36,7 @@ public class ProductosDao {
         }
     }
 
-    public ProductosVo buscarProducto(String nombre){
+    public ProductosVo buscarProducto(String nombre) {
 
         Conexion conn = new Conexion();
         ProductosVo productosVo = new ProductosVo();
@@ -100,7 +99,7 @@ public class ProductosDao {
             if (ventanaPrincipal.table1 != null) ventanaPrincipal.table1.setModel(model);
             else ventanaPrincipal.table1.setModel(model);
             while (rs.next()) {
-                Object[] row = new Object[] {
+                Object[] row = new Object[]{
                         rs.getInt("ProductId"),
                         rs.getString("ProductName"),
                         rs.getInt("SupplierID"),
@@ -118,4 +117,27 @@ public class ProductosDao {
     }
 
 
+    public void modificarProducto(ProductosVo productosVo) {
+        try {
+            Conexion conn = new Conexion();
+
+            String sql = "UPDATE products SET ProductName=?, SupplierID=?, CategoryID=?, QuantityPerUnit=?, UnitPrice=?, UnitsInStock=? WHERE ProductID=?";
+            PreparedStatement s = conn.getConnection().prepareStatement(sql);
+            s.setString(1, productosVo.getNombre());
+            s.setInt(2, productosVo.getSuplierID());
+            s.setInt(3, productosVo.getCategoryID());
+            s.setString(4, productosVo.getCantidadProducto());
+            s.setDouble(5, productosVo.getPrecioUnidad());
+            s.setInt(6, productosVo.getStock());
+            s.setInt(7, productosVo.getIdProducto());
+            s.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Se ha modificado Exitosamente", "Informaci�n", JOptionPane.INFORMATION_MESSAGE);
+            s.close();
+            conn.desconectar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se Modifico");
+            e.printStackTrace();
+
+        }
+    }
 }
