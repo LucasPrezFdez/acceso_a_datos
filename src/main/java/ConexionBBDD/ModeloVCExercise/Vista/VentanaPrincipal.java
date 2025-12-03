@@ -24,9 +24,12 @@ public class VentanaPrincipal{
         modificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                int fila = table1.getSelectedRow();
+                if (fila == -1) {
+                    JOptionPane.showMessageDialog(null, "Selecciona un elemento primero");
+                    return;
+                }
                 miCoordinador.mostrarVentanaModificar();
-                //miCoordinador.cargarTabla();
             }
         });
     }

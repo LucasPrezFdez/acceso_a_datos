@@ -5,6 +5,8 @@ import ConexionBBDD.ModeloVCExercise.Modelo.dao.ProductosDao;
 import ConexionBBDD.ModeloVCExercise.Modelo.vo.ProductosVo;
 import ConexionBBDD.ModeloVCExercise.Vista.VentanaPrincipal;
 
+import javax.swing.*;
+
 
 public class Logica {
 
@@ -28,5 +30,22 @@ public class Logica {
     public void cargarTabla(VentanaPrincipal ventanaPrincipal) {
         ProductosDao productosDao = new ProductosDao();
         productosDao.listarProductos(ventanaPrincipal);
+    }
+
+    public void cargarProductoAModificar() {
+        int row = coordinador.getVentanaPrincipal().table1.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila para modificar");
+            return;
+        }
+
+        int cols = coordinador.getVentanaPrincipal().table1.getColumnCount();
+        String[] datos = new String[cols];
+        for (int c = 0; c < cols; c++) {
+            Object val = coordinador.getVentanaPrincipal().table1.getValueAt(row, c);
+            datos[c] = val != null ? val.toString() : "";
+        }
+
+
     }
 }
