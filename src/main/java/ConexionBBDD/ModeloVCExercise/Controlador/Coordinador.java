@@ -53,7 +53,7 @@ public class Coordinador {
     }
 
     public void modificarProducto() {
-        miLogica.modificarProducto(ventanaModificar);
+        miLogica.modificarProducto();
     }
 
 

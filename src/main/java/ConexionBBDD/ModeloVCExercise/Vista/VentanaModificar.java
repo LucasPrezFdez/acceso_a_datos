@@ -29,11 +29,16 @@ public class VentanaModificar{
         aceptarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Conexion conn = new Conexion();
-                conn.getConnection();
                 miCoordinador.modificarProducto();
-                conn.desconectar();
                 miCoordinador.cargarTabla();
+            }
+        });
+        rechazarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaModificar ventana = miCoordinador.getVentanaModificar();
+                // Cerrar la ventana actual
+                SwingUtilities.getWindowAncestor(ventana.ventanaModificar).dispose();
             }
         });
     }

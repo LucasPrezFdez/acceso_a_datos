@@ -32,6 +32,12 @@ public class VentanaPrincipal{
                 miCoordinador.mostrarVentanaModificar();
             }
         });
+        añadirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
 
