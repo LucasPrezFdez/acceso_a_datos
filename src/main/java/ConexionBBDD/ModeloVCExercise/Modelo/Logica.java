@@ -4,6 +4,7 @@ import ConexionBBDD.ModeloVCExercise.Controlador.Coordinador;
 import ConexionBBDD.ModeloVCExercise.Modelo.conexion.Conexion;
 import ConexionBBDD.ModeloVCExercise.Modelo.dao.ProductosDao;
 import ConexionBBDD.ModeloVCExercise.Modelo.vo.ProductosVo;
+import ConexionBBDD.ModeloVCExercise.Vista.VentanaAñadir;
 import ConexionBBDD.ModeloVCExercise.Vista.VentanaModificar;
 import ConexionBBDD.ModeloVCExercise.Vista.VentanaPrincipal;
 
@@ -30,6 +31,32 @@ public class Logica {
             System.out.println("El ID del producto debe ser mayor que 0");
         }
 
+    }
+
+    public void añadirProducto() {
+        try {
+            Conexion conn = new Conexion();
+
+            PreparedStatement ps = conn.getConnection().prepareStatement(
+                    "INSERT INTO products (ProductName, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock) " +
+                            "VALUES (?, ?, ?, ?, ?)");
+
+            VentanaAñadir ventanaAñadir = coordinador.getVentanaAñadir();
+            ps.setString(1, ventanaAñadir.nombre.getText());
+            ps.setInt(2, Integer.parseInt(ventanaAñadir.categoryID.getText()));
+            ps.setString(3, ventanaAñadir.quantityPerUnit.getText());
+            ps.setDouble(4, Double.parseDouble(ventanaAñadir.unitPrice.getText()));
+            ps.setInt(5, Integer.parseInt(ventanaAñadir.unitsInStock.getText()));
+
+
+
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Producto añadido correctamente");
+            ps.close();
+            conn.desconectar();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void cargarTabla(VentanaPrincipal ventanaPrincipal) {
@@ -84,4 +111,13 @@ public class Logica {
             throw new RuntimeException(e);
         }
     }
+
+
+    public void buscarProducto() {
+        VentanaPrincipal ventanaPrincipal = coordinador.getVentanaPrincipal();
+        ProductosDao productosDao = new ProductosDao();
+        productosDao.buscarProducto(ventanaPrincipal);
+    }
+
+
 }

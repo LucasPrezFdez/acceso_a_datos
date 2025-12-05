@@ -1,6 +1,7 @@
 package ConexionBBDD.ModeloVCExercise.Controlador;
 
 import ConexionBBDD.ModeloVCExercise.Modelo.Logica;
+import ConexionBBDD.ModeloVCExercise.Vista.VentanaAñadir;
 import ConexionBBDD.ModeloVCExercise.Vista.VentanaModificar;
 import ConexionBBDD.ModeloVCExercise.Vista.VentanaPrincipal;
 
@@ -12,6 +13,7 @@ public class Principal {
     Coordinador miCoordinador;
     VentanaPrincipal ventanaPrincipal;
     VentanaModificar ventanaModificar;
+    VentanaAñadir ventanaAñadir;
 
     private void inicio() {
 
@@ -19,14 +21,17 @@ public class Principal {
         miCoordinador = new Coordinador();
         ventanaModificar = new VentanaModificar();
         ventanaPrincipal = new VentanaPrincipal();
+        ventanaAñadir = new VentanaAñadir();
 
         ventanaPrincipal.setMiCoordinador(miCoordinador);
         ventanaModificar.setMiCoordinador(miCoordinador);
+        ventanaAñadir.setMiCoordinador(miCoordinador);
         miLogica.setCoordinador(miCoordinador);
 
         /*Se establecen relaciones con la clase coordinador*/
         miCoordinador.setVentanaPrincipal(ventanaPrincipal);
         miCoordinador.setVentanaModificar(ventanaModificar);
+        miCoordinador.setVentanaAñadir(ventanaAñadir);
         miCoordinador.setMiLogica(miLogica);
 
         JFrame frame = new JFrame("VentanaPrincipal");

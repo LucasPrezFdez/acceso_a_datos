@@ -13,6 +13,8 @@ public class VentanaPrincipal{
     public JPanel ventanaPrincipal;
     private JButton modificarButton;
     private JButton añadirButton;
+    private JButton buscarButton;
+    public JTextField serched;
 
     public Coordinador miCoordinador;
 
@@ -35,9 +37,16 @@ public class VentanaPrincipal{
         añadirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                miCoordinador.mostrarVentanaAñadir();
             }
         });
+        buscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                miCoordinador.getMiLogica().buscarProducto();
+            }
+        });
+
     }
 
 

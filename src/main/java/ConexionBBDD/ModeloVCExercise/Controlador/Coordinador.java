@@ -1,6 +1,7 @@
 package ConexionBBDD.ModeloVCExercise.Controlador;
 
 import ConexionBBDD.ModeloVCExercise.Modelo.Logica;
+import ConexionBBDD.ModeloVCExercise.Vista.VentanaAñadir;
 import ConexionBBDD.ModeloVCExercise.Vista.VentanaModificar;
 import ConexionBBDD.ModeloVCExercise.Vista.VentanaPrincipal;
 
@@ -11,6 +12,15 @@ public class Coordinador {
     Logica miLogica;
     private VentanaPrincipal ventanaPrincipal;
     private VentanaModificar ventanaModificar;
+    private VentanaAñadir ventanaAñadir;
+
+    public VentanaAñadir getVentanaAñadir() {
+        return ventanaAñadir;
+    }
+
+    public void setVentanaAñadir(VentanaAñadir ventanaAñadir) {
+        this.ventanaAñadir = ventanaAñadir;
+    }
 
     public VentanaPrincipal getVentanaPrincipal() {
         return ventanaPrincipal;
@@ -44,6 +54,14 @@ public class Coordinador {
         cargarProductoAModificar();
     }
 
+    public void mostrarVentanaAñadir() {
+        JFrame frame = new JFrame("VentanaAñadir");
+        frame.setContentPane(ventanaAñadir.ventanaAñadir);
+        frame.pack();
+        frame.setVisible(true);
+
+    }
+
     public void cargarProductoAModificar() {
         miLogica.cargarProductoAModificar();
     }
@@ -54,6 +72,10 @@ public class Coordinador {
 
     public void modificarProducto() {
         miLogica.modificarProducto();
+    }
+
+    public void añadirProducto() {
+        miLogica.añadirProducto();
     }
 
 

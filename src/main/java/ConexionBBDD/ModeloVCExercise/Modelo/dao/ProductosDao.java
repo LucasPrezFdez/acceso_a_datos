@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.Vector;
 
 
@@ -98,6 +99,7 @@ public class ProductosDao {
             // Actualizar la vista: usar table1 si existe (probable GUI builder), sino tablaProductos
             if (ventanaPrincipal.table1 != null) ventanaPrincipal.table1.setModel(model);
             else ventanaPrincipal.table1.setModel(model);
+            /*
             while (rs.next()) {
                 Object[] row = new Object[]{
                         rs.getInt("ProductId"),
@@ -110,6 +112,7 @@ public class ProductosDao {
                 };
                 model.addRow(row);
             }
+             */
             conn.desconectar();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -139,5 +142,49 @@ public class ProductosDao {
             e.printStackTrace();
 
         }
+    }
+
+    public void buscarProducto(VentanaPrincipal ventanaPrincipal) {
+        String name = ventanaPrincipal.serched.getText();
+        if (name == null || name.trim().isEmpty()) {
+            listarProductos(ventanaPrincipal);
+            return;
+        }
+
+        try {
+            Conexion conn = new Conexion();
+            PreparedStatement ps = conn.getConnection().prepareStatement("SELECT * FROM products where ProductName=?");
+
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+
+            DefaultTableModel model = (DefaultTableModel) ventanaPrincipal.table1.getModel();
+            // limpiar tabla
+            model.setRowCount(0);
+            model.setColumnCount(0);
+
+            // Encabezados
+            ResultSetMetaData meta = rs.getMetaData();
+            int cols = meta.getColumnCount();
+            Vector<String> headers = new Vector<>();
+            for (int i = 1; i <= cols; i++) {
+                headers.add(meta.getColumnName(i));
+            }
+            model.setColumnIdentifiers(headers);
+
+            // Filas
+            int numRegistros = 0;
+            while (rs.next()) {
+                Vector<Object> fila = new Vector<>();
+                for (int i = 1; i <= cols; i++) {
+                    fila.add(rs.getObject(i));
+                }
+                model.addRow(fila);
+                numRegistros++;
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
     }
 }
